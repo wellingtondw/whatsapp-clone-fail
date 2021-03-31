@@ -143,25 +143,75 @@ class WhatsAppController {
     })
 
     this.el.btnAttachPhoto.on('click', e => {
-      console.log('photo')
+      this.el.inputPhoto.click()
+    })
+
+    this.el.inputPhoto.on('change', e => {
+      console.log(this.el.inputPhoto.files)
+
+      const filesArray = [...this.el.inputPhoto.files]
+
+      filesArray.forEach(file => {
+        console.log(file)
+      })
     })
 
     this.el.btnAttachCamera.on('click', e => {
-      console.log('Camera')
+      this.closeAllMainPanel()
+      this.el.panelCamera.addClass('open')
+      this.el.panelCamera.css({
+        'height': 'calc(100% - 120px)'
+      })
+    })
+
+    this.el.btnClosePanelCamera.on('click', e => {
+      this.closeAllMainPanel()
+      this.showPanelMessagesContainer()
+    })
+
+    this.el.btnTakePicture.on('click', e => {
+      console.log('Take picture')
     })
 
     this.el.btnAttachDocument.on('click', e => {
-      console.log('Document')
+      this.closeAllMainPanel()
+      this.el.panelDocumentPreview.addClass('open')
+      this.el.panelDocumentPreview.css({
+        'height': '100%'
+      })
+    })
+
+    this.el.btnClosePanelDocumentPreview.on('click', e => {
+      this.closeAllMainPanel()
+      this.showPanelMessagesContainer()
+    })
+
+    this.el.btnSendDocument.on('click', e => {
+      console.log('Send document')
     })
 
     this.el.btnAttachContact.on('click', e => {
-      console.log('Contact')
+      this.el.modalContacts.show()
+    })
+
+    this.el.btnCloseModalContacts.on('click', e => {
+      this.el.modalContacts.hide()
     })
   }
 
   closeMenuAttach(e) {
     this.el.menuAttach.removeClass('open')
     document.removeEventListener('click', this.closeMenuAttachEl)
+  }
+
+  showPanelMessagesContainer()  {
+    this.el.panelMessagesContainer.show()
+  }
+
+  closeAllMainPanel() {
+    this.el.panelMessagesContainer.hide()
+    this.el.panelDocumentPreview.removeClass('open')
+    this.el.panelCamera.removeClass('open')
   }
 
   closeAllLeftPanel() {
