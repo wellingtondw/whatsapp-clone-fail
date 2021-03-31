@@ -1,7 +1,9 @@
 class WhatsAppController {
 
   constructor () {
-    
+
+    this.closeMenuAttachEl = this.closeMenuAttach.bind(this)
+
     this.elementsPrototype()
     this.loadElements()
     this.initEvents()
@@ -124,8 +126,42 @@ class WhatsAppController {
       e.preventDefault()
 
       let formData = new FormData(this.el.formPanelAddContact)
-
     })
+
+    this.el.contactsMessagesList.querySelectorAll('.contact-item').forEach(item => {
+      item.on('click', e => {
+
+        this.el.home.hide()
+        this.el.main.css({ display: 'flex' })
+      })
+    })
+
+    this.el.btnAttach.on('click', e => {
+      e.stopPropagation()
+      this.el.menuAttach.addClass('open')
+      document.addEventListener('click', this.closeMenuAttachEl)
+    })
+
+    this.el.btnAttachPhoto.on('click', e => {
+      console.log('photo')
+    })
+
+    this.el.btnAttachCamera.on('click', e => {
+      console.log('Camera')
+    })
+
+    this.el.btnAttachDocument.on('click', e => {
+      console.log('Document')
+    })
+
+    this.el.btnAttachContact.on('click', e => {
+      console.log('Contact')
+    })
+  }
+
+  closeMenuAttach(e) {
+    this.el.menuAttach.removeClass('open')
+    document.removeEventListener('click', this.closeMenuAttachEl)
   }
 
   closeAllLeftPanel() {
